@@ -1,0 +1,66 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="index.js" defer></script>
+  <style></style>
+</head>
+
+<body>
+  <div id="body"></div>
+
+  <div id="menu" style="display: none;">
+    <ul id="menu-options">
+      <li onclick="renderDrawGrid()">Draw Grid</li>
+      <li onclick="renderFillGrid()">Fill Grid</li>
+      <li>Change row height</li>
+      <li>Change column width</li>
+    </ul>
+  </div>
+
+<style>
+#menu {
+  width: max-content;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+  position: absolute;
+}
+
+#menu-options {
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+}
+
+#menu-options > li {
+  font-weight: 500;
+  font-size: 14px;
+  padding: 10px 40px 10px 20px;
+  cursor: pointer;
+}
+
+#menu-options > li:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+</style>
+<script>
+oncontextmenu = e => {
+  e.preventDefault()
+  const { target, pageX, pageY } = e
+  const menu = document.querySelector("#menu")
+  menu.style.display = "block"
+  menu.style.left = pageX
+  menu.style.top = pageY
+}
+
+onclick = e => {
+  if (e.which != 3) {
+    document.querySelector("#menu").style.display = "none"
+  }
+}
+</script>
+</body>
+
+</html>
