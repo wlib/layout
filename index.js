@@ -27,6 +27,57 @@ const state = {
   rightClickTarget: undefined
 }
 
+const exportLayout = () => {
+  const finalHTML =
+    Object.entries(state.items)
+      .map(([id, { tag, content }]) => `<${tag} id="${id}">${content}</${tag}>`)
+      .join("\n")
+  const finalCSS =
+`body {
+  display: grid;
+  grid-template-columns: ${state.grid.columns.join(" ")};
+  grid-template-rows:
+    ${state.grid.rows.join("\n    ")}
+    ;
+  grid-template-areas:
+    ${format(state.grid.areas)
+      .map(row => '"' + row.join(" ") + '"')
+      .join("\n    ")}
+    ;
+}
+
+`
++
+Object.keys(state.items).map(id =>
+`#${id} {
+  grid-area: ${id};
+}`).join("\n\n")
+
+  const exportBody = open().document.body
+  exportBody.innerHTML = "<pre></pre>"
+  exportBody.querySelector("pre").innerText =
+`<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>My Awesome CSS Grid Layout</title>
+
+<style>
+${finalCSS}
+</style>
+
+</head>
+
+<body>
+${finalHTML.replace(/^/gm, "  ")}
+</body>
+
+</html>`
+}
+
 const changeGridSize = rowOrColumn => {
   const [_, rowi, columni] = state.rightClickTarget.id.match(/(\d+)\|(\d+)/)
   if (rowOrColumn == "row") {
