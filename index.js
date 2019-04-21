@@ -1,11 +1,11 @@
 const state = {
   items: {
-    header: { tag: "header", content: "Header",        color: `hsl(0, 75%, 70%)`   },
-    nav:    { tag: "nav",    content: "Navigation",    color: `hsl(60, 75%, 70%)`  },
-    hero:   { tag: "div",    content: "Hero",          color: `hsl(120, 75%, 70%)` },
-    main:   { tag: "main",   content: "Main content",  color: `hsl(180, 75%, 70%)` },
-    aside:  { tag: "aside",  content: "Aside content", color: `hsl(240, 75%, 70%)` },
-    footer: { tag: "footer", content: "Footer",        color: `hsl(300, 75%, 70%)` }
+    header: { tag: "header", content: "Header",        color: `hsl(0, 80%, 75%)`   },
+    nav:    { tag: "nav",    content: "Navigation",    color: `hsl(60, 80%, 75%)`  },
+    hero:   { tag: "div",    content: "Hero",          color: `hsl(120, 80%, 75%)` },
+    main:   { tag: "main",   content: "Main content",  color: `hsl(180, 80%, 75%)` },
+    aside:  { tag: "aside",  content: "Aside content", color: `hsl(240, 80%, 75%)` },
+    footer: { tag: "footer", content: "Footer",        color: `hsl(300, 80%, 75%)` }
   },
   grid: {
     columns: [
@@ -34,6 +34,12 @@ const changeGridSize = rowOrColumn => {
   } else if (rowOrColumn == "column") {
     state.grid.columns[columni] = prompt(state.grid.columns[columni])
   }
+  renderDrawGrid()
+}
+
+const changeOccupyingItem = () => {
+  const [_, rowi, columni] = state.rightClickTarget.id.match(/(\d+)\|(\d+)/)
+  state.grid.areas[rowi][columni] = prompt(state.grid.areas[rowi][columni])
   renderDrawGrid()
 }
 
