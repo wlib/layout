@@ -15,8 +15,8 @@
     <ul id="menu-options">
       <li onclick="renderDrawGrid()">Draw Grid</li>
       <li onclick="renderFillGrid()">Fill Grid</li>
-      <li>Change row height</li>
-      <li>Change column width</li>
+      <li onclick="changeGridSize('row')">Change row height</li>
+      <li onclick="changeGridSize('column')">Change column width</li>
     </ul>
   </div>
 
@@ -45,22 +45,6 @@
   background-color: rgba(0, 0, 0, 0.2);
 }
 </style>
-<script>
-oncontextmenu = e => {
-  e.preventDefault()
-  const { target, pageX, pageY } = e
-  const menu = document.querySelector("#menu")
-  menu.style.display = "block"
-  menu.style.left = pageX
-  menu.style.top = pageY
-}
-
-onclick = e => {
-  if (e.which != 3) {
-    document.querySelector("#menu").style.display = "none"
-  }
-}
-</script>
 </body>
 
 </html>

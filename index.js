@@ -24,6 +24,33 @@ const state = {
       [".",      "main",   "aside"],
       [".",      "footer", "."    ]
     ]
+  },
+  rightClickTarget: undefined
+}
+
+const changeGridSize = rowOrColumn => {
+  const [_, rowi, columni] = state.rightClickTarget.id.match(/(\d+)\|(\d+)/)
+  if (rowOrColumn == "row") {
+    state.grid.rows[rowi] = prompt(state.grid.rows[rowi])
+  } else if (rowOrColumn == "column") {
+    state.grid.columns[columni] = prompt(state.grid.columns[columni])
+  }
+  renderDrawGrid()
+}
+
+oncontextmenu = e => {
+  e.preventDefault()
+  const { target, pageX, pageY } = e
+  const menu = document.querySelector("#menu")
+  menu.style.display = "block"
+  menu.style.left = pageX
+  menu.style.top = pageY
+  state.rightClickTarget = target
+}
+
+onclick = e => {
+  if (e.which != 3) {
+    document.querySelector("#menu").style.display = "none"
   }
 }
 
@@ -56,64 +83,20 @@ const renderFillGrid = () => {
         .map(row => '"' + row.join(" ") + '"')
         .join("\n    ")}
     ;
-}
-`
-
-+
-
-state.items
-      .map((item, i) =>
+}` + state.items.map((item, i) =>
 `#${item.id} {
   grid-area: ${item.id};
   background-color: ${`hsl(${i * 360 / state.items.length}, ${65}%, ${70}%)`};
-}`)
-      .join("\n\n")
-}
-
-const updateGridSizes = e => {
-  const [_, rowOrColumn, i] = e.target.id.match(/(row|column)-(\d+)/)
-  const newValue = e.target.value
-  rowOrColumn == "row" ? state.grid.rows[i] = newValue
-                       : state.grid.columns[i] = newValue
-  if (e.key == "Enter") {
-    renderDrawGrid()
-  }
+}`).join("\n\n")
 }
 
 const renderDrawGrid = () => {
   document.querySelector("#body").innerHTML =
-  state.grid.rows
-    .map((row, rowi) =>
-      state.grid.columns
-        .map((column, columni) =>
-rowi == 0 && columni == 0 ?
-`
-<div style="display: grid;grid-template-rows: 1fr 1fr 1fr;border-style: solid;border-width: thin;">
-  <input size="3" style="justify-self: center;text-align:center;width: min-content;" id="column-${columni}" value="${column}">
-  <input size="3" style="align-self: center;text-align:center;width: min-content;" id="row-${rowi}" value="${row}">
-</div>
-`
-: rowi == 0 ?
-`
-<div style="text-align: center;border-style: solid;border-width: thin;">
-  <input size="3" style="text-align:center;width: min-content;" id="column-${columni}" value="${column}">
-</div>
-`
-: columni == 0 ?
-`
-<div style="display: grid;align-content: center;border-style: solid;border-width: thin;">
-  <input size="3" style="text-align:center;width: min-content;" id="row-${rowi}" value="${row}">
-</div>
-`
-:
-`
-<div style="border-style: solid;border-width: thin;"></div>
-`)
-        .join("\n")
-    )
-    .join("\n")
-
-  document.querySelectorAll("input").forEach(span => span.addEventListener("keypress", updateGridSizes))
+  state.grid.rows.map((row, rowi) =>
+    state.grid.columns.map((column, columni) =>
+      `<div id="${rowi}|${columni}">${rowi}|${columni}</div>`
+    ).join("\n")
+  ).join("\n")
 
   document.querySelector("style").innerHTML =
 `#body {
@@ -123,7 +106,11 @@ rowi == 0 && columni == 0 ?
     ${state.grid.rows.join("\n    ")}
     ;
 }
-`
+
+#body > div {
+  border-style: solid;
+  border-width: thin;
+}`
 }
 
 renderDrawGrid()
