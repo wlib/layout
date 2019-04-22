@@ -105,7 +105,7 @@ const format = areas => {
 }
 
 const renderDrawGrid = () => {
-  document.querySelector("#body").innerHTML =
+  document.querySelector("#display-body").innerHTML =
   state.grid.rows.map((row, rowi) =>
     state.grid.columns.map((column, columni) => {
       const area = state.grid.areas[rowi][columni]
@@ -117,7 +117,7 @@ const renderDrawGrid = () => {
   ).join("\n")
 
   document.querySelector("style").innerHTML =
-`#body {
+`#display-body {
   display: grid;
   grid-template-columns: ${state.grid.columns.join(" ")};
   grid-template-rows:
@@ -125,7 +125,7 @@ const renderDrawGrid = () => {
     ;
 }
 
-#body > div {
+#display-body > div {
   border-style: solid;
   border-width: thin;
   display: grid;
@@ -137,7 +137,7 @@ const renderDrawGrid = () => {
     ;
 }
 
-#body > div > div {
+#display-body > div > div {
   grid-row: 2;
   grid-column: 2;
   justify-self: center;

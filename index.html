@@ -4,17 +4,15 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Design Your CCS Grid Layout</title>
+
   <script src="index.js" defer></script>
   <style></style>
-  <style>
-    html {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    }
-  </style>
 </head>
 
 <body>
-  <div id="body"></div>
+  <div id="display-body"></div>
   <div id="resizer"></div>
   <div id="menu">
     <ul id="menu-options">
@@ -24,19 +22,26 @@
 
 <style>
 html {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   --display-body-width: auto;
 }
 
 body {
   display: grid;
   grid-template-columns: var(--display-body-width) 5px 1fr;
-  grid-template-areas: "body resizer menu"
+  grid-template-areas: "display-body resizer menu"
 }
 
-#body {
-  grid-area: body;
+#display-body {
+  grid-area: display-body;
   box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  overflow-x: scroll;
 }
 
 #resizer {
