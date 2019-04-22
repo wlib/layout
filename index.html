@@ -6,26 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="index.js" defer></script>
   <style></style>
+  <style>
+    html {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+  </style>
 </head>
 
 <body>
   <div id="body"></div>
-
-  <div id="menu" style="display: none;">
+  <div id="resizer"></div>
+  <div id="menu">
     <ul id="menu-options">
       <li onclick="exportLayout()">Export layout</li>
-      <li onclick="changeGridSize('row')">Change row height</li>
-      <li onclick="changeGridSize('column')">Change column width</li>
-      <li onclick="changeOccupyingItem()">Change occupying item</li>
     </ul>
   </div>
 
 <style>
-#menu {
-  width: max-content;
-  background-color: rgba(255, 255, 255, 0.95);
+html {
+  --display-body-width: auto;
+}
+
+body {
+  display: grid;
+  grid-template-columns: var(--display-body-width) 5px 1fr;
+  grid-template-areas: "body resizer menu"
+}
+
+#body {
+  grid-area: body;
   box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
-  position: absolute;
+  z-index: 1;
+}
+
+#resizer {
+  grid-area: resizer;
+  cursor: ew-resize;
+}
+
+#menu {
+  grid-area: menu;
 }
 
 #menu-options {

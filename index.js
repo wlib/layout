@@ -24,7 +24,7 @@ const state = {
       [".",      "footer", "."    ]
     ]
   },
-  rightClickTarget: undefined
+  isResizing: false
 }
 
 const exportLayout = () => {
@@ -78,37 +78,20 @@ ${finalHTML.replace(/^/gm, "  ")}
 </html>`
 }
 
-const changeGridSize = rowOrColumn => {
-  const [_, rowi, columni] = state.rightClickTarget.id.match(/(\d+)\|(\d+)/)
-  if (rowOrColumn == "row") {
-    state.grid.rows[rowi] = prompt(state.grid.rows[rowi])
-  } else if (rowOrColumn == "column") {
-    state.grid.columns[columni] = prompt(state.grid.columns[columni])
+const setDisplayBodyWidth = width =>
+  document.documentElement.style.setProperty("--display-body-width", width + "px")
+
+const resizer = document.querySelector("#resizer")
+
+resizer.addEventListener("mousedown", e => state.isResizing = true)
+
+addEventListener("mousemove", ({ pageX }) => {
+  if (state.isResizing) {
+    setDisplayBodyWidth(pageX)
   }
-  renderDrawGrid()
-}
+})
 
-const changeOccupyingItem = () => {
-  const [_, rowi, columni] = state.rightClickTarget.id.match(/(\d+)\|(\d+)/)
-  state.grid.areas[rowi][columni] = prompt(state.grid.areas[rowi][columni])
-  renderDrawGrid()
-}
-
-oncontextmenu = e => {
-  e.preventDefault()
-  const { target, pageX, pageY } = e
-  const menu = document.querySelector("#menu")
-  menu.style.display = "block"
-  menu.style.left = pageX
-  menu.style.top = pageY
-  state.rightClickTarget = target
-}
-
-onclick = e => {
-  if (e.which != 3) {
-    document.querySelector("#menu").style.display = "none"
-  }
-}
+addEventListener("mouseup", e => state.isResizing = false)
 
 const format = areas => {
   const longest = []
