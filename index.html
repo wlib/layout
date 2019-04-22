@@ -7,69 +7,24 @@
 
   <title>Design Your CCS Grid Layout</title>
 
-  <script src="index.js" defer></script>
+  <script type="module" src="index.mjs"></script>
+  <!-- This is the style for the actual GUI (menu etc) -->
+  <link rel="stylesheet" href="index.css">
+  <!-- This style element is filled and modified exclusively by the js side -->
   <style></style>
 </head>
 
 <body>
+  <!-- Holds the main display -->
   <div id="display-body"></div>
+  <!-- A thin vertical bar to resize the display body -->
   <div id="resizer"></div>
+  <!-- The main menu and controls -->
   <div id="menu">
     <ul id="menu-options">
-      <li onclick="exportLayout()">Export layout</li>
+      <li id="export">Export layout</li>
     </ul>
   </div>
-
-<style>
-html {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  -webkit-user-select: none;
-   -khtml-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  --display-body-width: auto;
-}
-
-body {
-  display: grid;
-  grid-template-columns: var(--display-body-width) 5px 1fr;
-  grid-template-areas: "display-body resizer menu"
-}
-
-#display-body {
-  grid-area: display-body;
-  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  overflow-x: scroll;
-}
-
-#resizer {
-  grid-area: resizer;
-  cursor: ew-resize;
-}
-
-#menu {
-  grid-area: menu;
-}
-
-#menu-options {
-  list-style: none;
-  padding: 10px 0;
-  margin: 0;
-}
-
-#menu-options > li {
-  font-weight: 500;
-  font-size: 14px;
-  padding: 10px 40px 10px 20px;
-  cursor: pointer;
-}
-
-#menu-options > li:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-</style>
 </body>
 
 </html>

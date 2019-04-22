@@ -1,0 +1,48 @@
+html {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  --display-body-width: auto;
+}
+
+body {
+  display: grid;
+  grid-template-columns: var(--display-body-width) 5px 1fr;
+  grid-template-areas: "display-body resizer menu"
+}
+
+#display-body {
+  grid-area: display-body;
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  overflow-x: scroll;
+}
+
+#resizer {
+  grid-area: resizer;
+  cursor: ew-resize;
+}
+
+#menu {
+  grid-area: menu;
+}
+
+#menu-options {
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+}
+
+#menu-options > li {
+  font-weight: 500;
+  font-size: 14px;
+  padding: 10px 40px 10px 20px;
+  cursor: pointer;
+}
+
+#menu-options > li:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
