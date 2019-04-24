@@ -2,22 +2,20 @@ import state from "./state.mjs"
 
 export default () => {
   document.querySelector("#display-body").innerHTML =
-  state.grid.rows.map((row, rowi) =>
-    state.grid.columns.map((column, columni) => {
-      const area = state.grid.areas[rowi][columni]
-      if (area == ".") {
-        return `<div id="${rowi}|${columni}"> <div>[Blank]</div> </div>`
-      }
-      return `<div id="${rowi}|${columni}" style="background-color: ${state.items[area].color};"> <div>${area}</div> </div>`
-    }).join("\n")
-  ).join("\n")
+    state.grid.areas.map((row, rowi) =>
+      row.map((item, columni) =>
+        item.isBlank
+          ? `<div data-row="${rowi+1}" data-column="${columni+1}"> <div>[Blank]</div> </div>`
+          : `<div data-row="${rowi+1}" data-column="${columni+1}" style="background-color: ${item.color};"> <div>${item.id}</div> </div>`
+      ).join("\n")
+    ).join("\n")
 
   document.querySelector("style").innerHTML =
 `#display-body {
   display: grid;
-  grid-template-columns: ${state.grid.columns.join(" ")};
+  grid-template-columns: ${state.grid.columnWidths.join(" ")};
   grid-template-rows:
-    ${state.grid.rows.join("\n    ")}
+    ${state.grid.rowHeights.join("\n    ")}
     ;
 }
 

@@ -3,25 +3,25 @@ import state from "./state.mjs"
 const format = areas => {
   const longest = []
   for (let i in areas[0]) {
-    longest.push(areas.map(row => row[i].length).sort((a, b) => b-a)[0])
+    longest.push(areas.map(row => row[i].id.length).sort((a, b) => b-a)[0])
   }
-  return areas.map(row => row.map((area, i) => {
-    const trailingSpaces = Array(longest[i] - area.length).fill(" ").join("")
-    return area + trailingSpaces
+  return areas.map(row => row.map(({ id }, i) => {
+    const trailingSpaces = Array(longest[i] - id.length).fill(" ").join("")
+    return id + trailingSpaces
   }))
 }
 
 export default () => {
   const finalHTML =
-    Object.entries(state.items)
-      .map(([id, { tag, content }]) => `<${tag} id="${id}">${content}</${tag}>`)
+    state.items
+      .map(({ id, tag }) => `<${tag} id="${id}"></${tag}>`)
       .join("\n")
   const finalCSS =
 `body {
   display: grid;
-  grid-template-columns: ${state.grid.columns.join(" ")};
+  grid-template-columns: ${state.grid.columnWidths.join(" ")};
   grid-template-rows:
-    ${state.grid.rows.join("\n    ")}
+    ${state.grid.rowHeights.join("\n    ")}
     ;
   grid-template-areas:
     ${format(state.grid.areas)
@@ -32,7 +32,7 @@ export default () => {
 
 `
 +
-Object.keys(state.items).map(id =>
+state.items.map(({ id }) =>
 `#${id} {
   grid-area: ${id};
 }`).join("\n\n")

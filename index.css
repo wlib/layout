@@ -6,12 +6,13 @@ html {
       -ms-user-select: none;
           user-select: none;
   --display-body-width: auto;
+  --selected-item-tools-display: none;
 }
 
 body {
   display: grid;
   grid-template-columns: var(--display-body-width) 5px 1fr;
-  grid-template-areas: "display-body resizer menu"
+  grid-template-areas: "display-body resizer menu";
 }
 
 #display-body {
@@ -19,6 +20,7 @@ body {
   box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
   z-index: 1;
   overflow-x: scroll;
+  cursor: pointer;
 }
 
 #resizer {
@@ -30,19 +32,21 @@ body {
   grid-area: menu;
 }
 
-#menu-options {
-  list-style: none;
-  padding: 10px 0;
-  margin: 0;
-}
-
-#menu-options > li {
+#menu button {
   font-weight: 500;
   font-size: 14px;
-  padding: 10px 40px 10px 20px;
+  padding: 2px;
   cursor: pointer;
 }
 
-#menu-options > li:hover {
+#menu button:hover {
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+#menu input {
+  max-width: 100px;
+}
+
+#selected-item-tools {
+  display: var(--selected-item-tools-display);
 }
