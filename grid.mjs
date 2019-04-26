@@ -27,28 +27,32 @@ export default class Grid {
   }
 
   getRow(n) {
-    return this.grid.areas[n-1]
+    return this.areas[n-1]
   }
 
   getColumn(n) {
-    return this.grid.areas.map(row => row[n-1])
+    return this.areas.map(row => row[n-1])
+  }
+
+  getItem(row, column) {
+    return this.areas[row-1][column-1]
   }
 
 
   getRowHeight(n) {
-    return this.grid.rowHeights[n-1]
+    return this.rowHeights[n-1]
   }
 
   setRowHeight(n, height) {
-    return this.grid.rowHeights[n-1] = height
+    return this.rowHeights[n-1] = height
   }
 
 
   getColumnWidth(n) {
-    return this.grid.columnWidths[n-1]
+    return this.columnWidths[n-1]
   }
 
   setColumnWidth(n, width) {
-    return this.grid.columnWidths[n-1] = width
+    return this.columnWidths[n-1] = width
   }
 }

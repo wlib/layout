@@ -1,7 +1,6 @@
 export default class Items extends Array {
-  constructor(items = []) {
-    super()
-    items.map(this.addItem.bind(this))
+  constructor(...args) {
+    super(...args)
   }
 
   addItem(item) {

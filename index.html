@@ -6,30 +6,94 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Design Your CCS Grid Layout</title>
-
-  <script type="module" src="index.mjs"></script>
-  <!-- This is the style for the actual GUI (menu etc) -->
-  <link rel="stylesheet" href="index.css">
-  <!-- This style element is filled and modified exclusively by the js side -->
-  <style></style>
 </head>
 
 <body>
-  <!-- Holds the main display -->
-  <div id="display-body"></div>
-  <!-- A thin vertical bar to resize the display body -->
-  <div id="resizer"></div>
-  <!-- The main menu and controls -->
-  <div id="menu">
-    <button id="export">Export layout</button>
-    <div id="selected-item-tools">
-      <div id="setItem">
-        <input name="id" placeholder="id" required>
-        <input name="tag" placeholder="tag">
-        <button>Set item</button>
-      </div>
+  <script type="module" src="./elements/app-root.mjs"></script>
+  <app-root></app-root>
+
+  <!-- Templates -->
+  <template class="app-root">
+    <div id="virtual-display">
+      <display-grid></display-grid>
     </div>
-  </div>
+    <resizer-bar></resizer-bar>
+    <main-menu></main-menu>
+
+    <style>
+      :host {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        --virtual-display-width: auto;
+        display: grid;
+        grid-template-columns: var(--virtual-display-width) 5px 1fr;
+        grid-template-areas: "virtual-display resizer-bar main-menu";
+      }
+
+      #virtual-display {
+        grid-area: virtual-display;
+        box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        overflow-x: scroll;
+      }
+
+      resizer-bar {
+        grid-area: resizer-bar;
+      }
+
+      main-menu {
+        grid-area: main-menu;
+      }
+    </style>
+  </template>
+
+  <template class="display-grid"></template>
+
+  <template class="grid-cell">
+    <style>
+      :host {
+        border-style: solid;
+        border-width: thin;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows:
+          1fr 1fr 1fr;
+      }
+
+      div {
+        grid-row: 2;
+        grid-column: 2;
+        justify-self: center;
+        align-self: center;
+      }
+    </style>
+  </template>
+
+  <template class="resizer-bar">
+    <style>
+      :host {
+        cursor: ew-resize;
+      }
+    </style>
+  </template>
+
+  <template class="main-menu">
+    <export-options></export-options>
+  </template>
+
+  <template class="export-options">
+    <button>Export...</button>
+
+    <style>
+      :host {
+        display: grid;
+      }
+    </style>
+  </template>
 </body>
 
 </html>
