@@ -1,6 +1,11 @@
-export default (name, base = HTMLElement) => (properties, attributeChangeHandlers = {}) => {
-  const template = document.querySelector(`template.${name}`)
+export const html = (strings, ...values) => {
+  const template = document.createElement("template")
+  template.innerHTML = strings.map((string, i) =>
+    string + (values[i] || "")).join("")
+  return template
+}
 
+export const DefineElement = (name, base = HTMLElement) => template => (properties, attributeChangeHandlers = {}) => {
   window.customElements.define(name, class extends base {
     static get observedAttributes() {
       return Object.keys(attributeChangeHandlers)
@@ -13,9 +18,7 @@ export default (name, base = HTMLElement) => (properties, attributeChangeHandler
       this.attachShadow({ mode: "open" })
 
       // Deeply clone the template and fill the shadow DOM root
-      if (template) {
-        this.shadowRoot.appendChild(template.content.cloneNode(true))
-      }
+      this.shadowRoot.appendChild(template.content.cloneNode(true))
 
       // Object.assign(this, properties) will not work with getters and setters
       Object.defineProperties(this, Object.keys(properties).reduce((descriptors, key) => {

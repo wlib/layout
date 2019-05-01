@@ -1,8 +1,9 @@
-import CreateCustomElement from "../CreateCustomElement.mjs"
+import { DefineElement, html } from "../DefineElement.mjs"
+
 import state from "../../state.mjs"
 import GridCell from "./grid-cell.mjs"
 
-export default CreateCustomElement("display-grid")({
+export default DefineElement("display-grid")(html``)({
   connectedCallback() {
     this.style.setProperty("display", "grid")
   },

@@ -1,6 +1,12 @@
-import CreateCustomElement from "./CreateCustomElement.mjs"
+import { DefineElement, html } from "./DefineElement.mjs"
 
-export default CreateCustomElement("resizer-bar")({
+export default DefineElement("resizer-bar")(html`
+<style>
+  :host {
+    cursor: ew-resize;
+  }
+</style>
+`)({
   connectedCallback() {
     this._isResizing = false
 

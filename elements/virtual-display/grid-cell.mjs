@@ -1,6 +1,24 @@
-import CreateCustomElement from "../CreateCustomElement.mjs"
+import { DefineElement, html } from "../DefineElement.mjs"
 
-export default CreateCustomElement("grid-cell")({
+export default DefineElement("grid-cell")(html`
+<style>
+  :host {
+    border-style: solid;
+    border-width: thin;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows:
+      1fr 1fr 1fr;
+  }
+
+  div {
+    grid-row: 2;
+    grid-column: 2;
+    justify-self: center;
+    align-self: center;
+  }
+</style>
+`)({
   get item() {
     return this._item
   },

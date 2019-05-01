@@ -1,4 +1,7 @@
-import CreateCustomElement from "../CreateCustomElement.mjs"
+import { DefineElement, html } from "../DefineElement.mjs"
+
 import "./export-options.mjs"
 
-export default CreateCustomElement("main-menu")({})
+export default DefineElement("main-menu")(html`
+<export-options></export-options>
+`)({})
